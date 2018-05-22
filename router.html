@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>印象陕西</title>
+        <script src="react.js"></script>
+        <script src="react-dom.js"></script>
+        <script src="browser.min.js"></script>
+        <script src="ReactRouter.min.js"></script>
+        <script src="auto.js"></script>
+        <STYLE TYPE="text/css">
+             body {
+                background-color: #FFF;
+                padding: 0;
+                margin: 0;
+             }
+             h1, h2, p, ul, li {
+                 padding:0;margin:0;
+                font-family: Helvetica, Arial, sans-serif;
+             }
+             .active {
+                background-color: #0099FF;
+             }
+        </STYLE>
+    </head>
+
+    <body>
+        <div id="container"></div>
+        <script type="text/babel">
+            var {
+                Router,
+                Route,
+                IndexRoute,
+                IndexLink,
+                Link,
+                hashHistory
+            } = ReactRouter;
+
+            var arr_meishi= [{"src":"./img/paomo.jpg","title":"羊肉泡馍","content":"羊肉泡馍烹制精细，料重味醇，肉烂汤浓，肥而不腻，食后回味无穷。"},
+                {"src":"./img/roujiamo.jpg","title":"肉夹馍","content":"肉夹馍陕西省汉族特色美食。"},
+                {"src":"./img/liangpi.jpg","title":"凉皮","content":"凉皮为陕西特色小吃之一，又称陕西凉皮。"},
+                {"src":"./img/hulatang.jpg","title":"肉丸胡辣汤","content":"肉丸胡辣汤源自西安，区别于外地的是汤要勾芡。"},
+                {"src":"./img/saozimian.jpg","title":"臊子面","content":"臊子面是中国陕西汉族传统面食，以宝鸡的岐山臊子面最为正宗，臊子面历史悠久。"},
+                {"src":"./img/youpomian.jpg","title":"油泼面","content":"油泼面，汉族传统风味面食，陕西很有特色的一种主食。"},
+                {"src":"./img/biangbiangmian.jpg","title":"biangbiang面","content":"Biang biang面是陕西名特小吃，也称裤带面。"},
+                {"src":"./img/guokui.jpg","title":"锅盔","content":"陕西锅盔，又叫锅魁、锅盔馍、干馍，是陕西省关中地区城乡居民喜食的汉族传统风味面食小吃。"},
+                {"src":"./img/heluo.jpg","title":"荞面饸饹","content":"荞面饸饹是陕西省著名的汉族面食小吃。"},
+                {"src":"./img/choujiu.jpg","title":"黄桂稠酒","content":"西安黄桂稠酒始于商周，距今已有三千多年的历史。"},
+                {"src":"./img/zenggao.jpg","title":"甑糕","content":"是西安和关中地区特有的传统风味小吃，用糯米、红枣或蜜枣、红豆置铁甑上蒸制而成。"},
+                {"src":"./img/hulutou.jpg","title":"葫芦头","content":"葫芦头泡馍是陕西西安特有的汉族传统风味小吃。"},
+                {"src":"./img/yuyu.jpg","title":"浆水鱼鱼","content":"浆水鱼鱼是一道著名的陕西传统小吃。浆水鱼鱼曰鱼，其实并不似鱼，酷如蝌蚪。"},
+                {"src":"./img/xuetiaotang.jpg","title":"长武血条汤","content":"血条汤是陕西长武特色食品。长武人红白喜事，生日满月，逢年过节，招待客人的头一顿上等饭是血条汤。"}];
+
+            var arr_renwen= [{"src":"./img/huashan.jpg","title":"华山","content":"华山，古称“西岳”，是我国著名的五岳之一，海拔2154.9米。"},
+                {"src":"./img/bingmayong.jpg","title":"秦始皇兵马俑","content":"世界第八大奇迹。1974年，秦始皇陵兵马俑坑的发现震惊世界。"},
+                {"src":"./img/dayanta.jpg","title":"大雁塔","content":"大雁塔大雁塔位于和平门外4公里的慈恩寺内"},
+                {"src":"./img/furongyuan.jpg","title":"大唐芙蓉园","content":"大唐芙蓉园（TangParadise）位于古都西安大雁塔之侧"},
+                {"src":"./img/huaqingchi.jpg","title":"华清池","content":"华清池是位于唐华清宫遗址之上的一座皇家宫苑，西距西安30公里,南依骊山，北面渭水。"},
+                {"src":"./img/huangdiling.jpg","title":"黄帝陵","content":"黄帝陵是中华民族始祖轩辕黄帝的陵寝，位于陕西省黄陵县城北1公里处桥山之巅。"},
+                {"src":"./img/huangchaobu.jpg","title":"黄巢堡国家森林公园","content":"黄巢堡是当年黄巢义军攻打长安时屯兵之处，这里山险、林密、水阔、谷深。"},
+                {"src":"./img/jinsixia.jpg","title":"金丝大峡谷","content":"国家森林公园位于陕西省东南部商南县境内，辖属商洛市。"},
+                {"src":"./img/taibaishan.jpg","title":"太白山国家森林公园 ","content":"太白山是我国著名的秦岭山脉的主峰，海拔3767米，自古便是一座名山。"},
+                {"src":"./img/famensi.jpg","title":"法门寺","content":"法门寺始建于东汉，兴起于隋，鼎盛于唐，因安置释迦牟尼佛的舍利而成为举世仰望的佛教圣地。"},
+                {"src":"./img/hukou.jpg","title":"壶口瀑布","content":"壶口瀑布是国家级风景名胜区，国家AAAA级旅游景区"}];
+
+            var arr_techan= [{"src":"./img/hongzao.jpg","title":"陕北红枣","content":"陕北大红枣是驰名中外的陕西传统名优特产之一。"},
+                {"src":"./img/pingguo.jpg","title":"白水苹果","content":"众所周知，白水县是国内外专家公认的苹果最佳优生区之一，素有“中国苹果之乡”的美誉，其“白水”苹果也被确定为陕西省知名品牌。"},
+                {"src":"./img/xifengjiu.jpg","title":"凤翔西凤酒","content":"西凤酒是我国“八大名酒”之一，，唯以凤翔城西柳镇所生产的酒为最佳，声誉最高。"},
+                {"src":"./img/shuijingbing.jpg","title":"水晶饼","content":"水晶饼因其馅芯透明发亮，犹如水晶而得名。"},
+                {"src":"./img/shiliu.jpg","title":"临潼石榴","content":"临潼石榴具有悠久的历史，引进初期，先在京都长安(今西安)御花园的“上林苑”和骊山的温泉宫(今华清池)内种植"},
+                {"src":"./img/lvrou.jpg","title":"凤翔腊驴肉","content":"驴肉具有补气血，益脏腑等功能，对于积年劳损、久病初愈、气血亏虚、短气乏力、食欲不振者皆为补益食疗佳品。"},
+                {"src":"./img/guamian.jpg","title":"歧山挂面","content":"选用优质小麦特粉，经过揉条，搓条，上棍等十道工序精制而成。"},
+                {"src":"./img/heimi.jpg","title":"洋县黑米","content":"洋县种植黑稻米，距今已有2000多年历史。"},
+                {"src":"./img/dongzao.jpg","title":"大荔冬枣 ","content":"享有“南荔枝，北冬枣，百果王”的盛名。平均单果重17.5g，最大单果重可达25g"},
+                {"src":"./img/ganju.jpg","title":"城固柑橘","content":"城固柑橘历史悠久，2000年前就有“蜀汉江铃千树”的记载。但是，以前由于缺乏统一商标，降低了城固柑橘的市场竞争力地。"},
+                {"src":"./img/putao.jpg","title":"户太八号葡萄","content":"西安那片森林农业合作社在户县政府的扶持下建立了3000余亩葡萄种植基地，现已取得初步成效。"},
+                {"src":"./img/yingtao.jpg","title":"灞桥樱桃","content":"灞桥樱桃颗粒饱满，果型硕大，果实呈肾形或宽心脏形，色泽艳丽有光泽，多数品种为鲜红色或紫红色"},
+                {"src":"./img/changwupingguo.jpg","title":"长武苹果","content":"长武苹果作为陕西的名优水果，其营养丰富，价值较高，在当地人们称“糖果”。"},
+                {"src":"./img/mihoutao.jpg","title":"周至猕猴桃","content":"周至猕猴桃是产于陕西周至的猕猴桃，周至猕猴桃的质地柔软，味道有时被描述为草莓、香蕉、凤梨三者的混合。"}];
+
+            var destination = document.querySelector("#container");
+            var Title = React.createClass({
+                render: function() {
+                    var TitleStyle = {
+                        width:"100%",
+                        height:"0.8rem",
+                        color:"#fff",
+                        textAlign:"center",
+                        fontFamily:"KaiTi",
+                        fontSize:"0.4rem",
+                        fontWeight:"bold",
+                        lineHeight:"0.8rem",
+                        backgroundColor:"#000",
+                    }
+                    return (
+                            <div style={TitleStyle}>
+                                <label>印 象 陕 西</label>
+                            </div>
+                    );
+                }
+            });
+
+            var Footer = React.createClass({
+                render: function() {
+                    var FootStyle = {
+                        position:"fixed",
+                        bottom:0,
+                        width:"100%",
+                        height:"0.8rem",
+                        color:"#fff",
+                        textAlign:"center",
+                        fontFamily:"KaiTi",
+                        fontSize:"0.3rem",
+                        fontWeight:"bold",
+                        lineHeight:"0.8rem",
+                        backgroundImage: "linear-gradient(#111,#333)",
+                    }
+                    return (
+                            <div style={FootStyle}>
+                                <label>人 文 陕 西 , 多 彩 三 秦</label>
+                            </div>
+                    );
+                }
+            });
+
+            var List = React.createClass({
+                render: function() {
+                    var ListStyle = {
+                        width:"100%",
+                        height:"1.6rem",
+                        textAlign: "left",
+                        border:"1px solid #ccc",
+                        listStyle:"none",
+                        backgroundImage:" linear-gradient(#fff,#f1f1f1)",
+                    }
+
+                    var ImgStyle_1 = {
+                        float:"left",
+                        width:"1.6rem",
+                        height:"1.2rem",
+                        margin:"0.2rem",
+                        borderRadius:"0.1rem",
+                    }
+
+                    var　DivStyle =　{
+                        float:"left",
+                        width:"8.0rem",
+                        marginRight:"0.6rem",
+                    }
+
+                    var　HStyle =　{
+                        color:"#333",
+                        marginTop:"0.2rem",
+                        fontFamily:"KaiTi",
+                        fontSize:"0.4rem",
+                    }
+
+                    var　PStyle =　{
+                        width:"100%",
+                        color:"#555",
+                        marginTop:"0.3rem",
+                        fontFamily:"KaiTi",
+                        fontSize:"0.3rem",
+                        textOverflow: "ellipsis",
+                        overflow: "hidden",
+                        whiteSpace:"nowrap" ,
+                    }
+
+                    return (
+                        <div>
+                            <li style={ListStyle}>
+                                <img src={this.props.list.src} style={ImgStyle_1}/>
+                                <div style={DivStyle}>
+                                    <h2 style={HStyle}>{this.props.list.title}</h2>
+                                    <p style={PStyle}>{this.props.list.content}</p>
+                                </div>
+                            </li>
+                        </div>
+                    );
+                }
+            });
+
+            var Home = React.createClass({
+                render: function() {
+                     var UlStyle = {
+                         width:"100%",
+                         marginTop:"1.8rem",
+                         padding:0,
+                     }
+                    return (
+                        <div>
+                            <ul style={UlStyle}>
+                                {arr_meishi.map(function(list){
+                                    return(
+                                           <List list={list} key={list.title}/>
+                                    )
+                                }
+                                )}
+                            </ul>
+                        </div>
+                        );
+                }
+            });
+
+            var Dufu = React.createClass({
+                render: function() {
+                    var UlStyle = {
+                        width:"100%",
+                        marginTop:"1.8rem",
+                        padding:0,
+                    }
+
+                    return (
+                            <div>
+                                <ul style={UlStyle}>
+                                    {arr_renwen.map(function(list){
+                                                return(
+                                                        <List list={list} key={list.title}/>
+                                                )
+                                            }
+                                    )}
+                                </ul>
+                            </div>
+                        );
+                }
+            });
+
+            var Lsy = React.createClass({
+                render: function() {
+                    var UlStyle = {
+                        width:"100%",
+                        marginTop:"1.8rem",
+                        padding:0,
+                    }
+
+                    return (
+                            <div>
+                                <ul style={UlStyle}>
+                                    {arr_techan.map(function(list){
+                                                return(
+                                                        <List list={list} key={list.title}/>
+                                                )
+                                            }
+                                    )}
+                                </ul>
+                            </div>
+                        )
+                }
+            });
+
+            var App = React.createClass({
+                render: function() {
+                    var DivStyle = {
+                        width:"100%",
+                        position:"fixed",
+                        top:0,
+                        backgroundColor:"#000",
+                    }
+
+                    var ConStyle = {
+                        marginBottom:"0.8rem",
+                    }
+
+                    var ListStyle = {
+                        float:"left",
+                        width:"33.1%",
+                        height:"1.0rem",
+                        lineHeight:"1.0rem",
+                        color:"#fff",
+                        fontSize:"0.4rem",
+                        listStyleType:"none",
+                        textAlign:"center",
+                        backgroundImage:"linear-gradient(#555,#222)" ,
+                        border:"1px solid #111",
+                    }
+
+                    var AStyle = {
+                        display:"inline-block",
+                        width:"100%",
+                        height:"1.0rem",
+                        fontFamily:"KaiTi",
+                        lineHeight:"1.0rem",
+                        color:"#fff",
+                        textDecoration:"none",
+                    }
+
+                    var ImgStyle = {
+                        width:"0.5rem",
+                        height:"0.4rem",
+                        margin:"0.2rem 0.2rem 0 0",
+                    }
+
+                    return (
+                        <div>
+                            <div style={DivStyle}>
+                                <Title/>
+                                <ul>
+                                    <li style={ListStyle}>
+                                        <IndexLink activeClassName="active" style={AStyle} to="/">
+                                            <img src={"./img/meishi-1.png"} style={ImgStyle}/>美食
+                                        </IndexLink>
+                                    </li>
+                                    <li style={ListStyle}>
+                                        <Link activeClassName="active" style={AStyle} to="/df">
+                                            <img src={"./img/renwen-2.png"} style={ImgStyle}/>人文
+                                        </Link>
+                                    </li>
+                                    <li style={ListStyle}>
+                                        <Link activeClassName="active" style={AStyle} to="/lsy">
+                                            <img src={"./img/techan-3.png"} style={ImgStyle}/> 特产
+                                        </Link>
+                                    </li>
+                                </ul>
+
+                            </div>
+
+                            <div style={ConStyle}>
+                                {this.props.children}
+                            </div>
+
+                            <Footer/>
+                        </div>
+                        );
+                }
+            });
+
+            ReactDOM.render(
+                <Router  history={hashHistory}>
+                    <Route path="/" 
+                    component={App}>
+                       <IndexRoute component={Home}/>
+                       <Route path="df" component={Dufu}/>
+                       <Route path="lsy" component={Lsy}/>
+                    </Route>
+
+                </Router>
+                ,destination
+                );
+        </script>
+    </body>
+</html>
